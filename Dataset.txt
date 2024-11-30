@@ -1,1 +1,3 @@
-https://www.kaggle.com/datasets/sriramr/fruits-fresh-and-rotten-for-classification/data
+Fruits fresh and rotten for classification:  https://www.kaggle.com/datasets/sriramr/fruits-fresh-and-rotten-for-classification/data
+
+(Apples, Banana, Orange)
