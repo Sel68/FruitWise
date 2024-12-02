@@ -64,3 +64,15 @@ def predict_fruit(image_path):
 
 
 predict_fruit("E:\99_100.jpg")
+
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.legend()
+plt.title('Model Accuracy')
+plt.show()
+
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.legend()
+plt.title('Model Loss')
+plt.show()
