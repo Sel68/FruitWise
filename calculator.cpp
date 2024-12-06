@@ -20,7 +20,8 @@ double shelfLife(string fruit, double score, double temp, double humidity, strin
 int main(){
 
     ifstream fruitText;
-    fruitText.open("E:\\CP\\CS101 Project\\Code\\fruit_output.txt");
+    fruitText.open("E:\\CP\\CS101 Project\\Code\\fruit_output.txt"); 
+    //file saved as fruit_output.txt
 
     if(!fruitText)
         cout<<"Unable to open file " << "fruit_output.txt"<<endl;
@@ -31,14 +32,14 @@ int main(){
         fruitText.close();
 
         double score;
-        cout<<"Please enter the health score of your fruit. (0-5, floating point allowed)\n";
+        cout<<"Please entr the health score of your fruit. (0-5, floating point allowed)\n";
         cin>>score;
 
-        string fruits[] = {"orange", "apple", "banana"};
-        double temp = 22.0;
-        double hum = 46.0;
+        string fruits[] = {"orange", "apple", "banana"}; //string array of fruits
+        double temp = 22.0; // Dec high, low = 19,0, 8.1 (Topi)
+        double hum = 46.0; // Dec Avg (Topi)
         double parameters[3][4]= {{6, 1, 0.05, 0.01}, {8, 1, 0.04, 0.008},
-            {4, 1, 0.07, 0.015}};
+            {4, 1, 0.07, 0.015}}; //2-D array  of parameters for each fruit
 
         double life = shelfLife(fruit, score, temp, hum, fruits, parameters);
         cout<<life<<endl;
