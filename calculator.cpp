@@ -32,7 +32,7 @@ int main(){
         fruitText.close();
 
         double score;
-        cout<<"Please entr the health score of your fruit. (0-5, floating point allowed)\n";
+        cout<<"Please enter the health score of your fruit. (0-5, floating point allowed)\n";
         cin>>score;
 
         string fruits[] = {"orange", "apple", "banana"}; //string array of fruits
