@@ -14,12 +14,12 @@ double parameters[3][4]= {{6, 1, 0.05, 0.01}, {8, 1, 0.04, 0.008},
 
 double shelfLife(string fruit, double score){    
     int i;
-    for(i=0; i<3; i++){
+    for(i=0; i<fruitCount; i++){
         if(fruit == fruits[i])
             break;
     }
     double life;
-    life = parameters[i][0] * score / (parameters[0][1] +parameters[0][2] * temp + parameters[0][3] * hum);
+    life = parameters[i][0] * score / (parameters[i][1] +parameters[i][2] * temp + parameters[i][3] * hum);
     return life;
 }
 
