@@ -3,17 +3,23 @@ using namespace std;
 
 #include <fstream>
 
+string fruits[] = {"orange", "apple", "banana"}; //string array of fruits
+const int fruitCount=3;
+
+const double temp = 22.0; // Dec high, low = 19,0, 8.1 (Topi)
+const double hum = 46.0; // Dec Avg (Topi)
+double parameters[3][4]= {{6, 1, 0.05, 0.01}, {8, 1, 0.04, 0.008},
+        {4, 1, 0.07, 0.015}}; //2-D array  of parameters for each fruit
 
 
-double shelfLife(string fruit, double score, double temp, double humidity, string fruits[], double parameters[3][4] ){
-    
+double shelfLife(string fruit, double score){    
     int i;
     for(i=0; i<3; i++){
         if(fruit == fruits[i])
             break;
     }
     double life;
-    life = parameters[i][0] * score / (parameters[0][1] +parameters[0][2] * temp + parameters[0][3] * humidity);
+    life = parameters[i][0] * score / (parameters[0][1] +parameters[0][2] * temp + parameters[0][3] * hum);
     return life;
 }
 
@@ -35,13 +41,10 @@ int main(){
         cout<<"Please enter the health score of your fruit. (0-5, floating point allowed)\n";
         cin>>score;
 
-        string fruits[] = {"orange", "apple", "banana"}; //string array of fruits
-        double temp = 22.0; // Dec high, low = 19,0, 8.1 (Topi)
-        double hum = 46.0; // Dec Avg (Topi)
-        double parameters[3][4]= {{6, 1, 0.05, 0.01}, {8, 1, 0.04, 0.008},
-            {4, 1, 0.07, 0.015}}; //2-D array  of parameters for each fruit
+        
+        
 
-        double life = shelfLife(fruit, score, temp, hum, fruits, parameters);
+        double life = shelfLife(fruit, score);
         cout<<life<<endl;
     }
 
