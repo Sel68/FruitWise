@@ -2,6 +2,7 @@
 using namespace std;
 
 #include <fstream>
+#include <ctime>
 
 string fruits[] = {"orange", "apple", "banana"}; //string array of fruits
 const int fruitCount=3;
@@ -9,7 +10,8 @@ const int fruitCount=3;
 const double temp = 22.0; // Dec high, low = 19,0, 8.1 (Topi)
 const double hum = 46.0; // Dec Avg (Topi)
 double parameters[3][4]= {{6, 1, 0.05, 0.01}, {8, 1, 0.04, 0.008},
-        {4, 1, 0.07, 0.015}}; //2-D array  of parameters for each fruit
+        {4, 1, 0.07, 0.015}}; //2-D array  of parameters for each fruit {orange, apple, 
+        // banana}
 
 
 double shelfLife(string fruit, double score){    
@@ -22,6 +24,17 @@ double shelfLife(string fruit, double score){
     life = parameters[i][0] * score / (parameters[i][1] +parameters[i][2] * temp + parameters[i][3] * hum);
     return life;
 }
+
+string currentTime()
+{
+    time_t curr = time(0); //current time
+    char buffer[80];
+    struct tm timeComp; //structure to hold time broken into components
+    timeComp = *localtime(&curr);
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d %X", &timeComp);
+    return string(buffer);
+}
+
 
 int main(){
 
@@ -46,6 +59,7 @@ int main(){
 
         double life = shelfLife(fruit, score);
         cout<<life<<endl;
+        cout<<currentTime()<<endl;
     }
 
     return 0;
