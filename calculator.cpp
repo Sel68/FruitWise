@@ -7,14 +7,13 @@ using namespace std;
 string fruits[] = {"orange", "apple", "banana"}; //string array of fruits
 const int fruitCount=3;
 
-const double temp = 22.0; // Dec high, low = 19,0, 8.1 (Topi)
-const double hum = 46.0; // Dec Avg (Topi)
+
 double parameters[3][4]= {{6, 1, 0.05, 0.01}, {8, 1, 0.04, 0.008},
         {4, 1, 0.07, 0.015}}; //2-D array  of parameters for each fruit {orange, apple, 
         // banana}
 
 
-double shelfLife(string fruit, double score){    
+double shelfLife(string fruit, double score, double temp, double hum){    
     int i;
     for(i=0; i<fruitCount; i++){
         if(fruit == fruits[i])
@@ -72,7 +71,28 @@ int main(){
         cout<<"Please enter the health score of your fruit. (0-5, floating point allowed)\n";
         cin>>score;
 
-        double life = shelfLife(fruit, score);
+        double temp = 22.0; // Dec high, low = 19,0, 8.1 (Topi)
+        double hum = 46.0; // Dec Avg (Topi)
+
+        cout<<"Please press Y to enter custom temperature and humidity values, or N to use preset Topi values.\n";
+        char c;
+        cin>>c;
+        while(c!= 'Y' && c!= 'N'){
+            cout<<"Incorrect keypress.\n";
+            cout<<"Please press Y to enter custom temperature and humidity values, or N to use preset Topi December averages.\n";
+            cin>>c;
+        }
+
+        if(c=='Y'){
+            cout<<"Please enter temperature: ";
+            cin>>temp;
+            cout<<"Please enter humidity percentage: \n";
+            cin>> hum;
+        }
+
+
+
+        double life = shelfLife(fruit, score, temp, hum);
         string reminder = calculateReminder(life);
 
         ofstream shelfLifeOutput("shelf_life.txt", ios::app);
