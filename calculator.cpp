@@ -35,6 +35,24 @@ string currentTime()
     return string(buffer);
 }
 
+string calculateReminder(double shelfLife)
+{
+    time_t current = time(0);
+    struct tm reminder = *localtime(&current);
+
+    int additionalHours = int((shelfLife * 24)) - 1; //reminder set for one hour before
+
+    reminder.tm_hour += additionalHours;
+
+    mktime(&reminder);
+
+    char buffer[80];
+    strftime(buffer, sizeof(buffer), "%A %d %B %I:%M %p", &reminder);
+
+    return string(buffer);
+}
+
+
 
 int main(){
 
@@ -54,12 +72,25 @@ int main(){
         cout<<"Please enter the health score of your fruit. (0-5, floating point allowed)\n";
         cin>>score;
 
-        
-        
-
         double life = shelfLife(fruit, score);
-        cout<<life<<endl;
-        cout<<currentTime()<<endl;
+        string reminder = calculateReminder(life);
+
+        ofstream shelfLifeOutput("shelf_life.txt", ios::app);
+
+        if(shelfLifeOutput.is_open()){
+            shelfLifeOutput << "Date: " << currentTime() << "\n";
+            shelfLifeOutput << "Fruit: " << fruit << "\n";
+            shelfLifeOutput << "Health Score: " << score << "\n";
+            shelfLifeOutput << "Shelf Life (days): " << life << "\n";
+            shelfLifeOutput << "Reminder: " << reminder << "\n\n";
+            shelfLifeOutput.close();
+            cout << "Shelf life: " << life << "\n";
+            cout << "Reminder set for " << reminder << " to finish your " << fruit << "s :)" << endl;
+
+        }
+        else
+            cout<<"Unable to open shelf_life.txt"<<endl;
+
     }
 
     return 0;
