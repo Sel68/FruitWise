@@ -52,22 +52,22 @@ string calculateReminder(double shelfLife)
 
 void userChoice(double &temp, double &hum)
 {
-    cout << "Please press Y to enter custom temperature and humidity values, or N to use preset Topi values.\n";
+    cout << "Please press Y to enter custom temperature and humidity values, or N to use preset Topi December averages.\n";
     char c;
     cin >> c;
-    while (c != 'Y' && c != 'N')
-    {
-        cout << "Incorrect keypress.\n";
-        cout << "Please press Y to enter custom temperature and humidity values, or N to use preset Topi December averages.\n";
-        cin >> c;
-    }
-
     if (c == 'Y')
     {
-        cout << "Please enter temperature: ";
+        cout << "Please enter temperature: \n";
         cin >> temp;
         cout << "Please enter humidity percentage: \n";
         cin >> hum;
+    }
+    else if (c == 'N')
+        cout << "Using preset values.\n";
+    else
+    {
+        cout << "Incorrect keypress.\n";
+        userChoice(temp, hum);
     }
 }
 
@@ -75,11 +75,33 @@ void values(double &score, double &temp, double &hum)
 {
     cout << "Please enter the health score of your fruit. (0-5, floating point allowed)\n";
     cin >> score;
+    while (score < 0 || score > 5)
+    {
+        cout << "Incorrect values. Please enter in the range [0, 5].\n";
+        cin >> score;
+    }
 
     temp = 22.0; // Dec high, low = 19,0, 8.1 (Topi)
     hum = 46.0;  // Dec Avg (Topi)
 
     userChoice(temp, hum);
+}
+
+void writeOutput(ofstream &shelfLifeOutput, string fruit, string reminder, double score, double life)
+{
+    if (shelfLifeOutput.is_open())
+    {
+        shelfLifeOutput << "Date: " << currentTime() << "\n";
+        shelfLifeOutput << "Fruit: " << fruit << "\n";
+        shelfLifeOutput << "Health Score: " << score << "\n";
+        shelfLifeOutput << "Shelf Life (days): " << life << "\n";
+        shelfLifeOutput << "Reminder: " << reminder << "\n\n";
+        shelfLifeOutput.close();
+        cout << "Shelf life: " << life << "\n";
+        cout << "Reminder set for " << reminder << " to finish your " << fruit << "s :)" << endl;
+    }
+    else
+        cout << "Unable to open shelf_life.txt" << endl;
 }
 
 int main()
@@ -105,20 +127,10 @@ int main()
         string reminder = calculateReminder(life);
 
         ofstream shelfLifeOutput("shelf_life.txt", ios::app);
+        writeOutput(shelfLifeOutput, fruit, reminder, score, life);
 
-        if (shelfLifeOutput.is_open())
-        {
-            shelfLifeOutput << "Date: " << currentTime() << "\n";
-            shelfLifeOutput << "Fruit: " << fruit << "\n";
-            shelfLifeOutput << "Health Score: " << score << "\n";
-            shelfLifeOutput << "Shelf Life (days): " << life << "\n";
-            shelfLifeOutput << "Reminder: " << reminder << "\n\n";
-            shelfLifeOutput.close();
-            cout << "Shelf life: " << life << "\n";
-            cout << "Reminder set for " << reminder << " to finish your " << fruit << "s :)" << endl;
-        }
-        else
-            cout << "Unable to open shelf_life.txt" << endl;
+        fruitText.close();
+        shelfLifeOutput.close();
     }
 
     return 0;
