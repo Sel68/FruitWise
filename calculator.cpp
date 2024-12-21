@@ -8,7 +8,7 @@ string fruits[] = {"orange", "apple", "banana"}; // string array of fruits
 const int fruitCount = 3;
 
 double parameters[3][4] = {{6, 1, 0.05, 0.01}, {8, 1, 0.04, 0.008}, {4, 1, 0.07, 0.015}};
-// 2-D array  of parameters for each fruit {orange, apple, banana}
+// 2-D array  of parameters for each fruit {orange, apple, banana} (in that order)
 
 double shelfLife(string fruit, double score, double temp, double hum)
 {
@@ -20,9 +20,11 @@ double shelfLife(string fruit, double score, double temp, double hum)
     }
     double life;
     life = parameters[i][0] * score / (parameters[i][1] + parameters[i][2] * temp + parameters[i][3] * hum);
-    return life;
+    return life; //returns shelf life of fruit in days
+
 }
 
+//gives current time in "YYYY-MM-DD HH:MM:SS" format
 string currentTime()
 {
     time_t curr = time(0); // current time
@@ -30,9 +32,10 @@ string currentTime()
     struct tm timeComp; // structure to hold time broken into components
     timeComp = *localtime(&curr);
     strftime(buffer, sizeof(buffer), "%Y-%m-%d %X", &timeComp);
-    return string(buffer);
+    return string(buffer); //returns time as string
 }
 
+//calculates reminder time one hour before shelf life ends
 string calculateReminder(double shelfLife)
 {
     time_t current = time(0);
@@ -47,7 +50,7 @@ string calculateReminder(double shelfLife)
     char buffer[80];
     strftime(buffer, sizeof(buffer), "%A %d %B %I:%M %p", &reminder);
 
-    return string(buffer);
+    return string(buffer); //returns reminder time as string
 }
 
 void userChoice(double &temp, double &hum)
@@ -67,7 +70,7 @@ void userChoice(double &temp, double &hum)
     else
     {
         cout << "Incorrect keypress.\n";
-        userChoice(temp, hum);
+        userChoice(temp, hum); //recursion 
     }
 }
 
@@ -107,7 +110,7 @@ void writeOutput(ofstream &shelfLifeOutput, string fruit, string reminder, doubl
 bool canOpenFile(ifstream &file){
 
     if(file)
-        return true;
+        return true; //returns true is file is open
     return false;
 }
 
@@ -118,7 +121,7 @@ int main()
     fruitText.open("E:\\CP\\CS101 Project\\Code\\fruit_output.txt");
     // file saved as fruit_output.txt
     
-    bool flag = canOpenFile(fruitText);
+    bool flag = canOpenFile(fruitText); //varibale to store file state
 
     if (!flag)
         cout << "Unable to open file " << "fruit_output.txt" << endl;
