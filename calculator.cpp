@@ -7,8 +7,8 @@ using namespace std;
 string fruits[] = {"orange", "apple", "banana"}; // string array of fruits
 const int fruitCount = 3;
 
-double parameters[3][4] = {{6, 1, 0.05, 0.01}, {8, 1, 0.04, 0.008}, {4, 1, 0.07, 0.015}}; // 2-D array  of parameters for each fruit {orange, apple,
-// banana}
+double parameters[3][4] = {{6, 1, 0.05, 0.01}, {8, 1, 0.04, 0.008}, {4, 1, 0.07, 0.015}};
+// 2-D array  of parameters for each fruit {orange, apple, banana}
 
 double shelfLife(string fruit, double score, double temp, double hum)
 {
@@ -104,14 +104,23 @@ void writeOutput(ofstream &shelfLifeOutput, string fruit, string reminder, doubl
         cout << "Unable to open shelf_life.txt" << endl;
 }
 
+bool canOpenFile(ifstream &file){
+
+    if(file)
+        return true;
+    return false;
+}
+
 int main()
 {
 
     ifstream fruitText;
     fruitText.open("E:\\CP\\CS101 Project\\Code\\fruit_output.txt");
     // file saved as fruit_output.txt
+    
+    bool flag = canOpenFile(fruitText);
 
-    if (!fruitText)
+    if (!flag)
         cout << "Unable to open file " << "fruit_output.txt" << endl;
     else
     {
@@ -129,7 +138,6 @@ int main()
         ofstream shelfLifeOutput("shelf_life.txt", ios::app);
         writeOutput(shelfLifeOutput, fruit, reminder, score, life);
 
-        fruitText.close();
         shelfLifeOutput.close();
     }
 
